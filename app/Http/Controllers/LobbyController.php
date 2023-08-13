@@ -49,8 +49,8 @@ class LobbyController extends Controller
         $lobby = session('lobby');
 
         if ($answer = Answer::where('player_id', $player->id)->where('round', $lobby->round)->first()) {
-            $answer->answer = $request->answer;
-            $answer->save();
+//            $answer->answer = $request->answer;
+//            $answer->save();
         } else {
             $answer = Answer::create([
                 'player_id' => $player->id,
