@@ -65,7 +65,7 @@ class LobbyController extends Controller
 
     public function gamemaster()
     {
-        $lobby = session('lobby');
+        $lobby = session()->get('lobby');
         $answers = Answer::where('lobby_id', $lobby->id)
             ->where('round', $lobby->round)->get();
 
@@ -86,7 +86,7 @@ class LobbyController extends Controller
 
     public function answers()
     {
-        $lobby = session('lobby');
+        $lobby = session()->get('lobby');
         $answers = Answer::where('lobby_id', $lobby->id)
             ->where('round', $lobby->round)->get();
 
