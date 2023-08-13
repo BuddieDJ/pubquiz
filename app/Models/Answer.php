@@ -14,7 +14,9 @@ class Answer extends Model
     protected $fillable = [
         'player_id',
         'lobby_id',
-        'answer'
+        'answer',
+        'round',
+        'is_correct'
     ];
 
     public function player()

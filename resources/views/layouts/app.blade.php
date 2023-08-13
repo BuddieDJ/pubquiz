@@ -8,6 +8,8 @@
     @yield('css')
 </head>
 <body class="bg-gray-800 flex justify-center items-center h-screen">
+    @yield('modal')
+
     @yield('content')
 </body>
 

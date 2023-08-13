@@ -12,7 +12,8 @@ class Lobby extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'code'
+        'code',
+        'round'
     ];
 
     public function players()

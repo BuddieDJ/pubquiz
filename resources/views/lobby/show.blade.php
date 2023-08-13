@@ -20,6 +20,9 @@
         <button type="button" id="submit" class="mt-4 bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
             Antwoord inleveren
         </button>
+        <button type="button" id="clear" class="mt-2 bg-transparent hover:bg-white hover:text-black text-white border-2 border-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            Canvas legen
+        </button>
     </div>
 @endsection
 
@@ -50,8 +53,6 @@
 
         $(document).ready(function(){
             $('#submit').click(function(){
-                console.log(canvas.toDataURL());
-
                 $.post("{{ route('lobby.submit') }}",
                     {
                         answer: canvas.toDataURL(),
@@ -62,6 +63,10 @@
                         console.log(data);
                     }
                 );
+            });
+
+            $('#clear').click(function(){
+                canvas.clear();
             });
         });
     </script>

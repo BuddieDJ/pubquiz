@@ -48,11 +48,17 @@ class LobbyController extends Controller
         $player = session('player');
         $lobby = session('lobby');
 
-        $answer = Answer::create([
-            'player_id' => $player->id,
-            'lobby_id' => $lobby->id,
-            'answer' => $request->answer
-        ]);
+        if ($answer = Answer::where('player_id', $player->id)->where('round', $lobby->round)->first()) {
+            $answer->answer = $request->answer;
+            $answer->save();
+        } else {
+            $answer = Answer::create([
+                'player_id' => $player->id,
+                'lobby_id' => $lobby->id,
+                'answer' => $request->answer,
+                'round' => $lobby->round
+            ]);
+        }
 
         return response()->json($answer);
     }
@@ -60,29 +66,136 @@ class LobbyController extends Controller
     public function gamemaster()
     {
         $lobby = session('lobby');
-        $players = $lobby->players()->with('answers')->get();
+        $answers = Answer::where('lobby_id', $lobby->id)
+            ->where('round', $lobby->round)->get();
 
-        return view('lobby.gamemaster', compact('players'));
+        $response = [];
+        foreach ($answers as $answer) {
+            $response[] = [
+                'id' => $answer->id,
+                'name' => $answer->player->name,
+                'answer' => $answer->answer,
+                'is_correct' => $answer->is_correct ?? false
+            ];
+        }
+
+        $answers = collect($response)->sortBy('name')->values()->all();
+
+        return view('lobby.gamemaster', compact('answers'));
     }
 
     public function answers()
     {
         $lobby = session('lobby');
-        $players = $lobby->players;
+        $answers = Answer::where('lobby_id', $lobby->id)
+            ->where('round', $lobby->round)->get();
 
         $response = [];
-        foreach ($players as $player) {
+        foreach ($answers as $answer) {
             $response[] = [
-                'name' => $player->name,
-                'answer' => $player->latestAnswer->answer
+                'id' => $answer->id,
+                'name' => $answer->player->name,
+                'answer' => $answer->answer,
+                'is_correct' => $answer->is_correct ?? false
             ];
         }
 
-        $response = [
-            'count' => count($response),
-            'data' => $response
-        ];
+        $response = collect($response)->sortBy('name')->values()->all();
 
         return response()->json($response);
+    }
+
+    public function next()
+    {
+        $lobby = session('lobby');
+        $lobby->increment('round');
+
+        return redirect()->route('gamemaster');
+    }
+
+    public function create()
+    {
+        return view('lobby.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string|min:3|max:255|unique:lobbies,code',
+            'name' => 'required|string|min:3|max:255'
+        ]);
+
+        $lobby = Lobby::create([
+            'code' => $request->code
+        ]);
+
+        $player = Player::create([
+            'lobby_id' => $lobby->id,
+            'name' => $request->name,
+            'is_gamemaster' => true
+        ]);
+
+        session(['lobby' => $lobby]);
+        session(['player' => $player]);
+
+        return redirect()->route('gamemaster');
+    }
+
+    public function correct(Request $request)
+    {
+        $request->validate([
+            'answer_id' => 'required|exists:answers,id'
+        ]);
+
+        $answer = Answer::findOrFail($request->answer_id);
+
+        $answer->is_correct = !$answer->is_correct;
+        $answer->save();
+
+        return response()->json($answer);
+    }
+
+    public function analytics()
+    {
+        $lobby = session('lobby');
+        $players = Player::where('lobby_id', $lobby->id)->get();
+
+        $response = [];
+        foreach ($players as $player) {
+            $answers = Answer::where('lobby_id', $lobby->id)
+                ->where('player_id', $player->id)
+                ->where('is_correct', true)->count();
+
+            $response[] = [
+                'id' => $player->id,
+                'name' => $player->name,
+                'score' => $answers
+            ];
+        }
+
+        $stats = collect($response)->sortByDesc('score')->values()->all();
+        return response()->json($stats);
+    }
+
+    public function end()
+    {
+        $lobby = session('lobby');
+        $players = Player::where('lobby_id', $lobby->id)->get();
+
+        $response = [];
+        foreach ($players as $player) {
+            $answers = Answer::where('lobby_id', $lobby->id)
+                ->where('player_id', $player->id)
+                ->where('is_correct', true)->count();
+
+            $response[] = [
+                'id' => $player->id,
+                'name' => $player->name,
+                'score' => $answers
+            ];
+        }
+
+        $stats = collect($response)->sortByDesc('score')->values()->all();
+        return view('lobby.end', compact('stats'));
     }
 }
