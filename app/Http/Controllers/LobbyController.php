@@ -69,6 +69,8 @@ class LobbyController extends Controller
         $answers = Answer::where('lobby_id', $lobby->id)
             ->where('round', $lobby->round)->get();
 
+        dd($answers, $lobby->round);
+
         $response = [];
         foreach ($answers as $answer) {
             $response[] = [

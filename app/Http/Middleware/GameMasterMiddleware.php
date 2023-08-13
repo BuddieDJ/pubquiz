@@ -14,7 +14,7 @@ class GameMasterMiddleware
         if (session()->has('player') && session('player')->is_gamemaster) {
             $player = Player::find(session('player')->id);
             session(['player' => $player]);
-            
+
             return $next($request);
         }
 
