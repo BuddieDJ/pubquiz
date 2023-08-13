@@ -35,7 +35,7 @@
                 <form action="{{ route('gamemaster.next') }}" method="POST">
                     @csrf
                     <button type="submit" class="mt-4 mr-2 bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Volgende ronde (Ronde: {{ session('lobby')->round + 1 }})
+                        Volgende ronde (Ronde: {{ $lobby->round }})
                     </button>
                 </form>
                 <button id="openModalBtn" type="button" class="mt-4 mr-2 bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
