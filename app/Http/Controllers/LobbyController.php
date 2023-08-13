@@ -67,9 +67,7 @@ class LobbyController extends Controller
     {
         $lobby = session()->get('lobby');
         $answers = Answer::where('lobby_id', $lobby->id)
-            ->where('round', $lobby->round)->get();
-
-        dd($answers, $lobby->round);
+            ->where('round', $lobby->round ?? 0)->get();
 
         $response = [];
         foreach ($answers as $answer) {
@@ -90,7 +88,7 @@ class LobbyController extends Controller
     {
         $lobby = session()->get('lobby');
         $answers = Answer::where('lobby_id', $lobby->id)
-            ->where('round', $lobby->round)->get();
+            ->where('round', $lobby->round ?? 0)->get();
 
         $response = [];
         foreach ($answers as $answer) {
