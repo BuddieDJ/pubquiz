@@ -28,8 +28,8 @@ class LobbyController extends Controller
             'name' => $request->name
         ]);
 
-        session(['lobby' => $lobby]);
-        session(['player' => $player]);
+        session()->put(['lobby' => $lobby]);
+        session()->put(['player' => $player]);
 
         return redirect()->route('lobby.show');
     }
@@ -135,8 +135,8 @@ class LobbyController extends Controller
             'is_gamemaster' => true
         ]);
 
-        session(['lobby' => $lobby]);
-        session(['player' => $player]);
+        session()->put(['lobby' => $lobby]);
+        session()->put(['player' => $player]);
 
         return redirect()->route('gamemaster');
     }

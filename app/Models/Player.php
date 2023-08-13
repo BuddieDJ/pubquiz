@@ -13,7 +13,8 @@ class Player extends Model
 
     protected $fillable = [
         'name',
-        'lobby_id'
+        'lobby_id',
+        'is_gamemaster'
     ];
 
     public function lobby()
