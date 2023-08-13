@@ -26,7 +26,7 @@ Route::middleware(['lobby'])->group(function () {
     Route::get('/lobby', [LobbyController::class, 'show'])->name('lobby.show');
     Route::post('/lobby/submit', [LobbyController::class, 'submit'])->name('lobby.submit');
 
-    Route::middleware([''])->group(function () {
+    Route::middleware(['gamemaster'])->group(function () {
         Route::get('/gamemaster', [LobbyController::class, 'gamemaster'])->name('gamemaster');
         Route::get('/gamemaster/answers', [LobbyController::class, 'answers'])->name('gamemaster.answers');
         Route::post('/gamemaster/next', [LobbyController::class, 'next'])->name('gamemaster.next');
