@@ -81,7 +81,7 @@ class LobbyController extends Controller
 
         $answers = collect($response)->sortBy('name')->values()->all();
 
-        return view('lobby.gamemaster', compact('answers'));
+        return view('lobby.gamemaster', compact(['answers', 'lobby']));
     }
 
     public function answers()
