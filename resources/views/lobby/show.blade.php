@@ -15,7 +15,7 @@
 @section('content')
     <div class="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto p-4">
         <h1 class="text-white font-bold text-center text-xl mb-4">Voer je antwoord in</h1>
-        <canvas id="canvas" height="500" style="border:1px solid #000;"></canvas>
+        <canvas id="canvas" height="400" style="border:1px solid #000;"></canvas>
 
         <button type="button" id="submit" class="mt-4 bg-white hover:bg-gray-100 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
             Antwoord inleveren

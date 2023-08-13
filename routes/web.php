@@ -33,5 +33,7 @@ Route::middleware(['lobby'])->group(function () {
 
         Route::post('/gamemaster/correct', [LobbyController::class, 'correct'])->name('gamemaster.correct');
         Route::post('/gamemaster/end', [LobbyController::class, 'end'])->name('gamemaster.end');
+        Route::get('/gamemaster/players', [LobbyController::class, 'players'])->name('gamemaster.players');
+
     });
 });

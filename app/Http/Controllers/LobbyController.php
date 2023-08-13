@@ -198,4 +198,21 @@ class LobbyController extends Controller
         $stats = collect($response)->sortByDesc('score')->values()->all();
         return view('lobby.end', compact('stats'));
     }
+
+    public function players()
+    {
+        $lobby = session('lobby');
+        $players = Player::where('lobby_id', $lobby->id)->get();
+
+        $response = [];
+        foreach ($players as $player) {
+            $response[] = [
+                'id' => $player->id,
+                'name' => $player->name,
+                'is_gamemaster' => $player->is_gamemaster
+            ];
+        }
+
+        return response()->json($response);
+    }
 }

@@ -28,6 +28,7 @@
             <h1 class="text-4xl font-bold"></h1>
 
             <h1 class="text-4xl font-bold">MEUP Pubquiz</h1>
+
             <p class="text-xl">Code: {{ $lobby->code }}</p>
 
             <div class="flex justify-center">
