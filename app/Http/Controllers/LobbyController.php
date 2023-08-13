@@ -87,6 +87,7 @@ class LobbyController extends Controller
     public function answers()
     {
         $lobby = session()->get('lobby');
+        dd($lobby);
         $answers = Answer::where('lobby_id', $lobby->id)
             ->where('round', $lobby->round)->get();
 
