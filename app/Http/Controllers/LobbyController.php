@@ -86,7 +86,7 @@ class LobbyController extends Controller
 
     public function answers()
     {
-        $lobby = Lobby::find(session('lobby')->id);
+        $lobby = session()->get('lobby');
         $answers = Answer::where('lobby_id', $lobby->id)
             ->where('round', $lobby->round ?? 0)->get();
 
@@ -100,9 +100,9 @@ class LobbyController extends Controller
             ];
         }
 
-        $response = collect($response)->sortBy('name')->values()->all();
+        $answers = collect($response)->sortBy('name')->values()->all();
 
-        return response()->json($response);
+        return response()->json($answers);
     }
 
     public function next()
