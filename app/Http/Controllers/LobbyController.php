@@ -48,7 +48,7 @@ class LobbyController extends Controller
         $player = session('player');
         $lobby = session('lobby');
 
-        if ($answer = Answer::where('player_id', $player->id)->where('round', $lobby->round)->first()) {
+        if ($answer = Answer::where('player_id', $player->id)->where('round', $lobby->round ?? 0)->first()) {
 //            $answer->answer = $request->answer;
 //            $answer->save();
         } else {
@@ -56,7 +56,7 @@ class LobbyController extends Controller
                 'player_id' => $player->id,
                 'lobby_id' => $lobby->id,
                 'answer' => $request->answer,
-                'round' => $lobby->round
+                'round' => $lobby->round ?? 0
             ]);
         }
 
