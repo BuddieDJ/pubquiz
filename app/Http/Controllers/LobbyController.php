@@ -45,8 +45,8 @@ class LobbyController extends Controller
             'answer' => 'required'
         ]);
 
-        $player = session('player');
-        $lobby = session('lobby');
+        $player = Player::find(session('player')->id);
+        $lobby = Lobby::find(session('lobby')->id);
 
         if ($answer = Answer::where('player_id', $player->id)->where('round', $lobby->round ?? 0)->first()) {
 //            $answer->answer = $request->answer;
