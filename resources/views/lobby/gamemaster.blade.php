@@ -110,33 +110,33 @@
                 );
             });
 
-            function fetchData() {
-                $.get('{{ route('gamemaster.answers') }}', function(data) {
-                    data.forEach(function(player) {
+            {{--function fetchData() {--}}
+            {{--    $.get('{{ route('gamemaster.answers') }}', function(data) {--}}
+            {{--        data.forEach(function(player) {--}}
 
-                        const grid = $('#grid');
-                        grid.empty();
+            {{--            const grid = $('#grid');--}}
+            {{--            grid.empty();--}}
 
-                        let correctClass = 'border-transparant'
-                        if (player.is_correct != null && player.is_correct) {
-                            correctClass = 'border-green-400'
-                        } else if(player.is_correct != null && !player.is_correct) {
-                            correctClass = 'border-red-400'
-                        }
+            {{--            let correctClass = 'border-transparant'--}}
+            {{--            if (player.is_correct != null && player.is_correct) {--}}
+            {{--                correctClass = 'border-green-400'--}}
+            {{--            } else if(player.is_correct != null && !player.is_correct) {--}}
+            {{--                correctClass = 'border-red-400'--}}
+            {{--            }--}}
 
-                        const cardHTML = `
-                            <div class="bg-gray-700 p-4 rounded answer border-2 ${correctClass}" data-id="${player.id}">
-                                <img src="${player.answer}" style="height: 300px; width: auto; display: block; margin: 0 auto;" alt="Beschrijving 1" class="w-full object-cover rounded">
-                                <h2 class="text-gray-200 text-center font-bold text-xl mt-4">${player.name}</h2>
-                            </div>
-                        `;
+            {{--            const cardHTML = `--}}
+            {{--                <div class="bg-gray-700 p-4 rounded answer border-2 ${correctClass}" data-id="${player.id}">--}}
+            {{--                    <img src="${player.answer}" style="height: 300px; width: auto; display: block; margin: 0 auto;" alt="Beschrijving 1" class="w-full object-cover rounded">--}}
+            {{--                    <h2 class="text-gray-200 text-center font-bold text-xl mt-4">${player.name}</h2>--}}
+            {{--                </div>--}}
+            {{--            `;--}}
 
-                        grid.append(cardHTML);
-                    })
-                });
-            }
+            {{--            grid.append(cardHTML);--}}
+            {{--        })--}}
+            {{--    });--}}
+            {{--}--}}
 
-            setInterval(fetchData, 1000);
+            {{--setInterval(fetchData, 1000);--}}
         });
     </script>
 @endsection
