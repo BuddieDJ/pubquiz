@@ -136,7 +136,7 @@
                 });
             }
 
-            setInterval(fetchData, 10000);
+            setInterval(fetchData, 1000);
         });
     </script>
 @endsection
